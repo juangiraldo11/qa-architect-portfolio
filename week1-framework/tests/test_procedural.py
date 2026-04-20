@@ -3,7 +3,7 @@ from playwright.sync_api import sync_playwright, expect
 
 def test_login_procedural():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         page = browser.new_page()
         page.goto("https://the-internet.herokuapp.com/login")
         page.fill("#username", "tomsmith")
@@ -14,7 +14,7 @@ def test_login_procedural():
 
 def test_invalid_login_procedural():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         page = browser.new_page()
         page.goto("https://the-internet.herokuapp.com/login")
         page.fill("#username", "tomsmith")

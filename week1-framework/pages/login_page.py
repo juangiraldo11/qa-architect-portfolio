@@ -1,0 +1,32 @@
+from dataclasses import dataclass
+from pages.flash_message import FlashMessage
+
+
+@dataclass
+class User:
+    username: str
+    password: str
+
+
+class LoginPage:
+    URL = "https://the-internet.herokuapp.com/login"
+
+    def __init__(self, page):
+        self.page = page
+        self.flash = FlashMessage(page)
+        self.username_input = page.get_by_label("Username")
+        self.password_input = page.get_by_label("Password")
+        self.login_button = page.get_by_role("button", name="Login")
+
+    def login_with(self, user: User):
+        self.username_input.fill(user.username)
+        self.password_input.fill(user.password)
+        self.login_button.click()
+        from pages.secure_page import SecurePage
+        return SecurePage(self.page)
+
+    def login_expecting_failure(self, user: User):
+        self.username_input.fill(user.username)
+        self.password_input.fill(user.password)
+        self.login_button.click()
+        return self
